@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="#fff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="133dp"
+        android:background="@drawable/background"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/round"
+            android:drawableRight="@drawable/ic_search_black_24dp"
+            android:hint="검색"
+            android:elevation="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:textColor="#ec6387"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Music"
+            android:fontFamily="@font/uhbe_family"
+            android:textColor="#fff"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="horizontal"></android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="17dp"
+            android:background="@drawable/player_back_1"
+            android:orientation="horizontal"
+            android:id="@+id/lin_miniplayer"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+                <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                    <!--android:id="@+id/album_art"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:src="@drawable/album_test"-->
+                    <!--/>-->
+                <RelativeLayout
+                    android:layout_width="170dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/circle_img"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/album_art"
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/album_test" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/uhbe_family"
+                        android:text="매일 듣는 노래"
+                        android:textColor="#ec6387"
+                        android:layout_marginTop="10dp"
+                        android:textSize="13sp"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:id="@+id/album_maintext"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/uhbe_family"
+                        android:text="황치열"
+                        android:textColor="#ec6387"
+                        android:layout_marginTop="2dp"
+                        android:textSize="10sp"
+                        android:id="@+id/album_sub"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/rewind"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_rewind"
+                    android:layout_marginTop="25dp"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/play"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_play_pause"
+                    android:layout_marginTop="16dp"/>
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/forward"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_forward"
+                    android:layout_marginTop="25dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Hello World!"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+</LinearLayout>
