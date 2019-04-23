@@ -16,7 +16,8 @@ import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +108,8 @@ public class AudioAdapter extends CursorRecyclerViewAdapter<RecyclerView.ViewHol
             mTxtSubTitle.setText(item.mArtist +"("+item.mAlbum+")");
             mTxtDuration.setText(android.text.format.DateFormat.format("mm:ss",item.mDuration));
             Uri albumArtUri = ContentUris.withAppendedId(artworkUri,item.mAlbumId);
-            Glide.with(itemView.getContext()).load(albumArtUri).error(R.drawable.empty_album_img).into(mImgAlbumArt);
+//            Glide.with(itemView.getContext()).load(albumArtUri).error((int)R.drawable.empty_album_img).into(mImgAlbumArt);
+            Picasso.with(itemView.getContext()).load(albumArtUri).error(R.drawable.empty_album_img).into(mImgAlbumArt);
         }
     }
 

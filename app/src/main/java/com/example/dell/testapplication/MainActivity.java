@@ -37,12 +37,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView btnplaypause;
     ImageView btnfoward;
     LinearLayout lin_min_player;
-
+    private static final int PERM_REQ_CODE = 23;
     public static Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +83,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else{
             getAudioListFromMediaDatabase(getApplicationContext());
         }
-
+        if (checkAudioPermission()){
+            getAudioListFromMediaDatabase(getApplicationContext());
+        }
+        else
+            requestAudioPermission();
 
         //EDITTEXT 검색
         editText = (EditText)findViewById(R.id.edit_text);
@@ -132,8 +135,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        btnplaypause.setOnClickListener(this);
 //        btnfoward.setOnClickListener(this);
 //        lin_min_player.setOnClickListener(this);
-//        Intent intent = new Intent(MainActivity.this,SileUpActivity.class);
-//        startActivity(intent);
     }
 
 
@@ -208,8 +209,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                       String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
                         long dur = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
                         long albumid = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));
-
-                       mArrayList.add(new Audio_item_1(id,title,artist,dur,albumid,index));
+                        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+                        String bookmark = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Genres._ID));
+                        Log.i("Bookmark",bookmark);
+                       mArrayList.add(new Audio_item_1(id,title,artist,dur,albumid,index,path));
                         index++;
                     }
 
@@ -279,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Audio_item_1 audioItem = AudioApplication.getInstance().getServiceInterface().getAudioItem();
         if (audioItem != null) {
             Uri albumArtUri = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),audioItem.AlbumId);
-            Glide.with(getApplicationContext()).load(albumArtUri).error(R.drawable.empty_album_img).into(album_Art);
+            Picasso.with(getApplicationContext()).load(albumArtUri).error(R.drawable.empty_album_img).into(album_Art);
             album_mainText.setText(audioItem.title);
             album_sub.setText(audioItem.subTitle);
         } else {
@@ -303,5 +306,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnplaypause.setImageResource(R.drawable.pause);
     }
 
+    private boolean checkAudioPermission() {
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
+    }
 
+    private void requestAudioPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, PERM_REQ_CODE);
+    }
 }

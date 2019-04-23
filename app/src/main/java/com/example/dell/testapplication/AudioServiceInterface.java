@@ -14,7 +14,9 @@ public class AudioServiceInterface {
     private ServiceConnection mServiceConnection;
     private AudioService mService;
     MainActivity mainActivity;
+    private Context mContext;
     public AudioServiceInterface(Context context) {
+        this.mContext = context;
         mServiceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
@@ -102,4 +104,16 @@ public class AudioServiceInterface {
         return null;
     }
 
+    public void go(String path){
+        Intent intent = new Intent(mContext,MusicStreamActivity.class);
+        intent.putExtra("path",path);
+        mContext.startActivity(intent);
+
+    }
+    public int getAudioSessionId(){
+        if(mService.mMediaPlayer == null){
+            return -1;
+        }
+        return mService.mMediaPlayer.getAudioSessionId();
+    }
 }

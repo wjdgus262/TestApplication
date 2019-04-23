@@ -21,12 +21,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SileUpActivity" />
 
         <service
             android:name=".AudioService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="REWIND" />
+                <action android:name="TOGGLE_PLAY" />
+                <action android:name="FORWARD" />
+                <action android:name="CLOSE" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".MusicStreamActivity"></activity>
     </application>
 
 </manifest>

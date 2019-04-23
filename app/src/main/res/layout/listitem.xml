@@ -64,6 +64,12 @@
             android:layout_height="0dp"
             android:textColor="#fff"
             android:id="@+id/albumindex"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:textColor="#fff"
+            android:id="@+id/albumPath"/>
     </LinearLayout>
 
     <android.support.constraint.ConstraintLayout

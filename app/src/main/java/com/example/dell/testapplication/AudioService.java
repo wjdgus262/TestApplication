@@ -16,7 +16,8 @@ import java.util.ArrayList;
 
 public class AudioService extends Service {
     private final IBinder mBinder = new AudioServiceBinder();
-    private MediaPlayer mMediaPlayer;
+    public MediaPlayer mMediaPlayer;
+    private NotificationPlayer mNotificationPlayer;
     private boolean isPrepared;
     public class AudioServiceBinder extends Binder {
         AudioService getService(){
@@ -35,6 +36,7 @@ public class AudioService extends Service {
                 isPrepared = true;
                 mp.start();
                 sendBroadcast(new Intent(BroadcastActions.PREPARED));
+//                updateNotificationPlayer();
             }
         });
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -42,6 +44,7 @@ public class AudioService extends Service {
             public void onCompletion(MediaPlayer mp) {
                 isPrepared = false;
                 sendBroadcast(new Intent(BroadcastActions.PLAY_STATE_CHANGED));
+//                updateNotificationPlayer();
 //                Log.i("이거는","나");
             }
         });
@@ -50,6 +53,7 @@ public class AudioService extends Service {
             public boolean onError(MediaPlayer mp, int what, int extra) {
                 isPrepared = false;
                 sendBroadcast(new Intent(BroadcastActions.PLAY_STATE_CHANGED));
+//                updateNotificationPlayer();
                 return false;
             }
         });
@@ -59,6 +63,7 @@ public class AudioService extends Service {
 
             }
         });
+        mNotificationPlayer = new NotificationPlayer(this);
     }
 
     public AudioService() {
@@ -113,6 +118,7 @@ public class AudioService extends Service {
         if (isPrepared) {
             mMediaPlayer.pause();
             sendBroadcast(new Intent(BroadcastActions.PLAY_STATE_CHANGED));
+//            updateNotificationPlayer();
         }
     }
 
@@ -136,6 +142,7 @@ public class AudioService extends Service {
         if (isPrepared) {
             mMediaPlayer.start();
             sendBroadcast(new Intent(BroadcastActions.PLAY_STATE_CHANGED));
+//            updateNotificationPlayer();
         }
     }
 
@@ -169,5 +176,39 @@ public class AudioService extends Service {
     public boolean isPlaying() {
         return mMediaPlayer.isPlaying();
     }
+
+    private void updateNotificationPlayer(){
+        if(mNotificationPlayer != null){
+            mNotificationPlayer.updateNotificationPlayer();
+        }
+    }
+    private void removeNotificationPlayer(){
+        if(mNotificationPlayer != null){
+            mNotificationPlayer.removeNotificationPlayer();
+        }
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent != null) {
+            String action = intent.getAction();
+            if (CommandActions.TOGGLE_PLAY.equals(action)) {
+                if (isPlaying()) {
+                    pause();
+                } else {
+                    play();
+                }
+            } else if (CommandActions.REWIND.equals(action)) {
+                rewind();
+            } else if (CommandActions.FORWARD.equals(action)) {
+                forward();
+            } else if (CommandActions.CLOSE.equals(action)) {
+                pause();
+                removeNotificationPlayer();
+            }
+        }
+        return super.onStartCommand(intent, flags, startId);
+    }
+
 
 }

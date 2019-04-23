@@ -65,13 +65,23 @@ public class Audio_item_1 {
     public Audio_item_1(){
 
     }
-    public Audio_item_1(long id,String title, String subTitle, long duration,long albumId,int index) {
+
+    public String getmDataPath() {
+        return mDataPath;
+    }
+
+    public void setmDataPath(String mDataPath) {
+        this.mDataPath = mDataPath;
+    }
+
+    public Audio_item_1(long id, String title, String subTitle, long duration, long albumId, int index,String path) {
         this.id = id;
         this.title = title;
         this.subTitle = subTitle;
         this.duration = duration;
         this.AlbumId = albumId;
         this.index =  index;
+        this.mDataPath = path;
     }
     public static Audio_item_1 bindCursor(Cursor cursor) {
         Audio_item_1 audioItem = new Audio_item_1();

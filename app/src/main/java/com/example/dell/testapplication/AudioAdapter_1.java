@@ -2,6 +2,7 @@ package com.example.dell.testapplication;
 
 import android.content.ContentUris;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -18,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,8 +79,11 @@ public class AudioAdapter_1 extends RecyclerView.Adapter<AudioAdapter_1.CustomVi
             customViewHolder.title.setSelected(true);
             customViewHolder.subtitle.setText(arrayList.get(i).getSubTitle());
             customViewHolder.dur.setText(android.text.format.DateFormat.format("mm:ss",arrayList.get(i).getDuration()));
-            Glide.with(mcontext).load(albumArtUri).error(R.drawable.empty_album_img).into(customViewHolder.circleImageView);
+            customViewHolder.albumPath.setText(arrayList.get(i).getmDataPath());
+            Picasso.with(mcontext).load(albumArtUri).error(R.drawable.empty_album_img).into(customViewHolder.circleImageView);
 //            customViewHolder.circleImageView.setImageResource(R.drawable.background);
+//        Glide.with(mcontext).load(albumArtUri).error(new Re)
+//            Glide
 
         customViewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,18 +92,22 @@ public class AudioAdapter_1 extends RecyclerView.Adapter<AudioAdapter_1.CustomVi
                 TextView textView = (TextView)v.findViewById(R.id.albumtitle);
                 TextView id = (TextView)v.findViewById(R.id.albumid);
                 TextView index = (TextView)v.findViewById(R.id.albumindex);
+                TextView pathView = (TextView)v.findViewById(R.id.albumPath);
+
                 ImageView imageView = (ImageView)v.findViewById(R.id.btn_play_pause);
                 int position = Integer.parseInt(index.getText().toString());
                 String id_text = id.getText().toString();
 //                Toast.makeText(context,i+"",Toast.LENGTH_SHORT).show();
 //                imageView.setImageResource(R.drawable.pause);
                 String text = textView.getText().toString();
+                String path = pathView.getText().toString();
+                Toast.makeText(context,path,Toast.LENGTH_SHORT).show();
 //                mainActivity.btnplaypause = (ImageView)v.findViewById(R.id.btn_play_pause);
 
 
                 AudioApplication.getInstance().getServiceInterface().setPlayList(getAudioIds()); // 재생목록등록
                 AudioApplication.getInstance().getServiceInterface().play(i);
-
+                AudioApplication.getInstance().getServiceInterface().go(path);
 
 
 //                Toast.makeText(context, id_text+"", Toast.LENGTH_LONG).show();
@@ -175,6 +183,7 @@ public class AudioAdapter_1 extends RecyclerView.Adapter<AudioAdapter_1.CustomVi
         protected TextView subtitle;
         protected TextView dur;
         protected  TextView index_1;
+        protected TextView albumPath;
         protected CircleImageView circleImageView;
         protected ImageView btnpaueplay;
 
@@ -187,6 +196,7 @@ public class AudioAdapter_1 extends RecyclerView.Adapter<AudioAdapter_1.CustomVi
             this.dur = (TextView)view.findViewById(R.id.albumduration);
             this.circleImageView = (CircleImageView) view.findViewById(R.id.albumimg);
             this.index_1 = (TextView)view.findViewById(R.id.albumindex);
+            this.albumPath = (TextView)view.findViewById(R.id.albumPath);
         }
     }
 }
