@@ -101,7 +101,7 @@ public class AudioAdapter_1 extends RecyclerView.Adapter<AudioAdapter_1.CustomVi
 //                imageView.setImageResource(R.drawable.pause);
                 String text = textView.getText().toString();
                 String path = pathView.getText().toString();
-                Toast.makeText(context,path,Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context,path,Toast.LENGTH_SHORT).show();
 //                mainActivity.btnplaypause = (ImageView)v.findViewById(R.id.btn_play_pause);
 
 
